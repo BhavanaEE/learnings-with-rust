@@ -1,32 +1,24 @@
-use std::{io, cmp::Ordering};
-
-use rand::Rng;
-
 fn main() {
-    println!("Guess a random number :)");
+    // References and borrowing
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
-    println!("secret number is {secret_number}");
-    loop {
-        println!("Provide an input number to guess");
+    let s1 = String::from("hello");
+    let s2 = references_borrow(s1);
+    println!("{}", s2.0);
+}
 
-    let mut guess = String::new();
+fn references_borrow(s1: String) -> (String, usize) {
+    println!("inside func {}", s1);
+    let length = s1.len();
+    (s1, length)
+}
 
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("failed to read line");
-
-    println!("your guess is {guess}");
-
-    
-
-    let guess1:i32 = guess.trim().parse().expect("please type a number");
-    match guess1.cmp(&secret_number) {
-        Ordering::Less => println!("Too small"),
-        Ordering::Greater => println!("Too big"),
-        Ordering::Equal => {println!("you win");
-    break;}
-        
+fn first_word(s: &String) -> usize {
+    let s_as_bytes = s.as_bytes();
+    for (i, &item) in s_as_bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
     }
-    }
+
+    s.len()
 }
