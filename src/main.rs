@@ -1,24 +1,43 @@
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
 fn main() {
-    // References and borrowing
+    let user1 = User {
+        username: String::from("Bhavana"),
+        email: String::from("qwerty@123"),
+        active: true,
+        sign_in_count: 1,
+    };
 
-    let s1 = String::from("hello");
-    let s2 = references_borrow(s1);
-    println!("{}", s2.0);
+    let user2 = build_user(String::from("anki@123"), String::from("ankita"));
+
+    // string init
+    let user3 = User {
+        email: String::from("asdf@123"),
+        username: String::from("asdf"),
+        ..user2
+    };
+    println!("{}\n{}\n{}", user1.email, user2.sign_in_count, user3.active);
+
+    // struct tuple
+
+    let rect = (30, 40);
+    println!("{}", area(rect));
 }
 
-fn references_borrow(s1: String) -> (String, usize) {
-    println!("inside func {}", s1);
-    let length = s1.len();
-    (s1, length)
-}
-
-fn first_word(s: &String) -> usize {
-    let s_as_bytes = s.as_bytes();
-    for (i, &item) in s_as_bytes.iter().enumerate() {
-        if item == b' ' {
-            return i;
-        }
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,
+        username,
+        sign_in_count: 1,
+        active: false,
     }
+}
 
-    s.len()
+fn area(dimensions: (u32, u32)) -> u32 {
+    dimensions.0 * dimensions.1
 }
