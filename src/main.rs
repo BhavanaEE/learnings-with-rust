@@ -5,6 +5,25 @@ struct User {
     active: bool,
 }
 
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+// implementation block (method)
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+//Associated functions
+impl Rectangle {
+    fn Square(dimension: u32) -> Self {
+        Self { width: dimension, height: dimension }
+    }
+}
+
 fn main() {
     let user1 = User {
         username: String::from("Bhavana"),
@@ -26,7 +45,23 @@ fn main() {
     // struct tuple
 
     let rect = (30, 40);
+
+    let rect1 = Rectangle {
+        width: 2,
+        height: 4,
+    };
+
     println!("{}", area(rect));
+
+    // implementation
+
+    // method
+    println!("area of rect is {} ", rect1.area());
+
+    // associated func code
+    let sq = Rectangle::Square(3);
+    println!("area of rect {}",sq.area());
+    
 }
 
 fn build_user(email: String, username: String) -> User {
