@@ -1,55 +1,43 @@
-// vector collection
+// Strings are stored as collection of utf-8 encoded bytes
 
+use std::fmt::format;
+use unicode_segmentation::UnicodeSegmentation;
 fn main() {
-    let v1 = vec![1,2,3,4,5];
-    for i in &v1 {
-        println!("{}",i);
-    }
+    let s1 = String::new(); // initialising empty string
+    let s2 = "hey bhavana, how are you?";
+    let s3 = s2.to_string();
+    let s4 = s1.to_string();
+    let mut s5 = String::from("Bhavana");
 
-    let mut v2 = vec![1,2,3,4,5];
-    for i in &mut v2 {
-        *i+=50;
-    }
-    for i in &v2 {
-        println!("{}",i);
-    }
-
-    // get method
-
-    let mut v3 = vec![1,2,3,4,5];
-    let third = &v3[2];
-
-    v3.push(56);
-    //println!("third element is {}",third);
-
-    match v2.get(2) {
-        Some(x) => println!("element at index is {}",x),
-        None => println!("no element at index"),
-    }
-
-    // STORING ENUM VARIANTS INSIDE VECTOR
+    println!("{}\n{}\n{}\n{}\n{}",s1,s2,s3,s4,s5);
     
-    #[derive(Debug)] // adding debug trait
-    enum SS {
-        Int(i32),
-        Float(f64),
-        Text(String),
+    // grow and shrink the size
+    s5.push_str(" chivukula");
+    s5.push('!');
+    println!("{}",s5);
+
+    let s6 = s5+ s2; 
+    println!("{}",s6);
+
+
+
+    let s11 = String::from("Hello ");
+    let s12 = String::from("world");
+    // let s13 = s11 + &s12; // moving ownership of s11 to s13 and taking all characters in s12 to s3. So we need to borrow.
+    let s13 = format!("{}{}",s11,s12); // doesn't take ownership of these strings
+    println!("{}",s13);
+
+    // INDEXING INTO A STRING
+    // Bytes, Scalar values, Grapheme clusters 
+
+    for b in s11.bytes() {
+        println!("In bytes{}", b)
     }
-
-    let row = vec![
-        SS::Int(3),
-        SS::Float(6.89),
-        SS::Text(String::from("Hello bhavana")),
-    ];
-
-    for i in &row {
-        println!("elements in row are {:?}",i);
+    for c in s11.chars() {
+        println!("In chars{}", c)
     }
-
-    match &row[1] {
-        SS::Int(i) => println!("value of integer is {}",i),
-        SS::Float(i) => println!("value of string is {}",i),
-        SS::Text(i) => println!("value of text is {}",i),
-
+    //need to have unicode segmentation crate
+    for g in s11.graphemes(true) {
+        println!("In graphemes{}", g)
     }
 }
