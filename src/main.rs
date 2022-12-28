@@ -1,78 +1,29 @@
-struct User {
-    username: String,
-    email: String,
-    sign_in_count: u64,
-    active: bool,
-}
-
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-// implementation block (method)
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-}
-
-//Associated functions
-impl Rectangle {
-    fn Square(dimension: u32) -> Self {
-        Self { width: dimension, height: dimension }
-    }
-}
+// vector collection
 
 fn main() {
-    let user1 = User {
-        username: String::from("Bhavana"),
-        email: String::from("qwerty@123"),
-        active: true,
-        sign_in_count: 1,
-    };
-
-    let user2 = build_user(String::from("anki@123"), String::from("ankita"));
-
-    // string init
-    let user3 = User {
-        email: String::from("asdf@123"),
-        username: String::from("asdf"),
-        ..user2
-    };
-    println!("{}\n{}\n{}", user1.email, user2.sign_in_count, user3.active);
-
-    // struct tuple
-
-    let rect = (30, 40);
-
-    let rect1 = Rectangle {
-        width: 2,
-        height: 4,
-    };
-
-    println!("{}", area(rect));
-
-    // implementation
-
-    // method
-    println!("area of rect is {} ", rect1.area());
-
-    // associated func code
-    let sq = Rectangle::Square(3);
-    println!("area of rect {}",sq.area());
-    
-}
-
-fn build_user(email: String, username: String) -> User {
-    User {
-        email,
-        username,
-        sign_in_count: 1,
-        active: false,
+    let v1 = vec![1,2,3,4,5];
+    for i in &v1 {
+        println!("{}",i);
     }
-}
 
-fn area(dimensions: (u32, u32)) -> u32 {
-    dimensions.0 * dimensions.1
+    let mut v2 = vec![1,2,3,4,5];
+    for i in &mut v2 {
+        *i+=50;
+    }
+    for i in &v2 {
+        println!("{}",i);
+    }
+
+    // get method
+
+    let mut v3 = vec![1,2,3,4,5];
+    let third = &v3[2];
+
+    v3.push(56);
+    //println!("third element is {}",third);
+
+    match v2.get(2) {
+        Some(x) => println!("element at index is {}",x),
+        None => println!("no element at index"),
+    }
 }
