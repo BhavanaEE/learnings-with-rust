@@ -1,13 +1,23 @@
-// Error handling
-// shortcut for panic using unwrap and expect
-use std::fs::File;
-
+#![allow(unused)]
 fn main() {
+    use std::fs::File;
+    use std::io::{self, Read};
 
-    //unwrap
-    let f1 = File::open("hello.txt").unwrap();
+    fn read_username_from_file() -> Result<String, io::Error> {
+        let username_file_result = File::open("hello.txt");
 
-    // expect
-    let f2 = File::open("hello.txt")
-        .expect("No file named hello.txt");
+        let mut username_file = match username_file_result {
+            Ok(file) => file,
+            Err(e) => return Err(e),
+        };
+
+        let mut username = String::new();
+
+        match username_file.read_to_string(&mut username) {
+            Ok(_) => Ok(username),
+            Err(e) => Err(e),
+        }
+    }
+
+    println!("{:?}",read_username_from_file()) // Ok("Hey Bhavana")
 }
