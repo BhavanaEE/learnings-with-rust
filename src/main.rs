@@ -1,30 +1,15 @@
-// hashmap collection
+// Error handling
 
-//updating hashmap
-use std::collections::HashMap;
+use std::fs::File;
 
 fn main() {
-    let mut scores = HashMap::new();
-    
-    scores.insert(String::from("blue"), 10);
-    scores.insert(String::from("blue"), 30);
+    let mut f = File::open("hello.txt");
 
-    println!("{:?}",scores.get("blue")); // Some(30) - overrides
+    // shadowing to redeclare f
+    let f = match f {
+        Ok(file) => file,
+        Err(error) => panic!("problem while opening a file {:?}",error),
+    };
 
-    scores.entry(String::from("yellow")).or_insert(20);
-    scores.entry(String::from("yellow")).or_insert(68);
 
-    println!("{:?}",scores.get("yellow")); // Some(20)
-
-    // Word count
-    let text = "hello world beautiful world";
-
-    let mut map = HashMap::new();
-
-    for word in text.split_whitespace() {
-        let count = map.entry(word).or_insert(0);
-        *count += 1;
-    }
-
-    println!("{:?}",map);
 }
