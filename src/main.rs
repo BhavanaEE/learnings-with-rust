@@ -1,25 +1,50 @@
-// Generics method definitions
+// Traits
 
-struct Point<X1, Y1> {
-    x: X1,
-    y: Y1,
+use std::fmt::format;
+
+pub trait Summary {
+    fn summarize(&self) -> String;
 }
 
-// declaring T as a generic type after impl, Rust can identify that the type in the angle brackets in Point is a generic type rather than a concrete type.
-impl<X1, Y1> Point<X1, Y1> {
-    fn mixup<X2, Y2>(self, other: Point<X2, Y2>) -> Point<X1, Y2> {
-        Point {
-            x: self.x,
-            y: other.y,
-        }
+pub struct Person {
+    pub name: String,
+    pub age: u32,
+    pub gender: char,
+}
+
+impl Summary for Person {
+    fn summarize(&self) -> String {
+        format!("Name of the person is:{} and age is:{}",self.name,self.age)
+    }
+}
+
+pub struct Student {
+    pub roll_number: u32,
+    pub name: String,
+    pub class: u32,
+    pub marks_sheet: u32
+}
+
+impl Summary for Student {
+    fn summarize(&self) -> String {
+        format!("Student name is:{} and roll number is:{}",self.name,self.roll_number)
     }
 }
 
 fn main() {
-    let p1 = Point { x: 5, y: 10.4 };
-    let p2 = Point { x: "Hello", y: 'c' };
+    let per = Person {
+        name: String::from("Bhavana"),
+        age:23,
+        gender: 'F',
+    };
 
-    let p3 = p1.mixup(p2);
+    let stu = Student {
+        roll_number: 66,
+        name: String::from("Bhavana"),
+        class: 1,
+        marks_sheet: 95,
+    };
 
-    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+    println!("Person details = {}",per.summarize());
+    println!("Student details = {}",stu.summarize());
 }
