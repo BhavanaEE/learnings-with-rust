@@ -1,23 +1,39 @@
-#![allow(unused)]
+// Generics functions definitons
+
 fn main() {
-    use std::fs::File;
-    use std::io::{self, Read};
+    let number_list = vec![34, 50, 25, 100, 65];
 
-    fn read_username_from_file() -> Result<String, io::Error> {
-        let username_file_result = File::open("hello.txt");
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(*result, 100);
 
-        let mut username_file = match username_file_result {
-            Ok(file) => file,
-            Err(e) => return Err(e),
-        };
+    let char_list = vec!['y', 'm', 'a', 'q'];
 
-        let mut username = String::new();
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(*result, 'y');
+}
 
-        match username_file.read_to_string(&mut username) {
-            Ok(_) => Ok(username),
-            Err(e) => Err(e),
+fn largest_i32(list: &[i32]) -> &i32 {
+    let mut largest = &list[0];
+
+    for item in list {
+        if item > largest {
+            largest = item;
         }
     }
 
-    println!("{:?}",read_username_from_file()) // Ok("Hey Bhavana")
+    largest
+}
+
+fn largest_char(list: &[char]) -> &char {
+    let mut largest = &list[0];
+
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
 }
