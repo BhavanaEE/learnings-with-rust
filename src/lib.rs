@@ -2,7 +2,7 @@
 #[cfg(test)]
 mod tests {
     #[test]
-    fn get_sum() -> Result<(),String> {
+    fn get_sum1() -> Result<(),String> {
         if 2+8 == 10 {
             Ok(())
         } else {
@@ -10,3 +10,8 @@ mod tests {
         }
     }
 }
+
+#[test]
+    fn get_sum2() {
+        assert_eq!(2+2,4)
+    }
